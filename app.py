@@ -7,6 +7,9 @@ from routes.horario_route import horarios_bp # Importa o Blueprint de horarios.
 from routes.endereco_route import endereco_bp # Importa o Blueprint endereços.
 from routes.pagamento_route import pagamento_bp # importa o Blueprint de pagamento.
 from routes.confirmacao_pedido_route import confirmacao_pedido_bp # importa o blueprint de confirmação de pedidos.
+from routes.upload_route import upload_bp
+import os
+
 
 # Cria a aplicação Flask.
 app = Flask(__name__)
@@ -25,6 +28,17 @@ app.register_blueprint(horarios_bp, url_prefix='/horarios') # Rota de Horarios
 app.register_blueprint(endereco_bp, url_prefix='/enderecos') # Rota de endereços.
 app.register_blueprint(pagamento_bp, url_prefix='/pagamentos') # Rota de pagamentos.
 app.register_blueprint(confirmacao_pedido_bp, url_prefix='/pedidos') # Rota de confirmação de pedidos.
+
+UPLOAD_FOLDER = 'uploads'
+
+app.register_blueprint(user_bp, url_prefix='/users')
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+app.register_blueprint(upload_bp, url_prefix='/uploads')
 
 # Executa a aplicação em modo debug.
 if __name__ == '__main__':

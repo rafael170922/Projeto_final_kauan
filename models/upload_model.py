@@ -7,7 +7,7 @@ class UploadModel:
         conn = get_db_connection()
         try:
             conn.execute(''' 
-                INSERT INTO uploads (filename, filepath)
+                INSERT INTO uploads (filehorario, filepath)
                 VALUES (?, ?) # Os valores serão substituidos pelos dados passados
             ''', (filehorario, filepath))
             conn.commit()
@@ -18,16 +18,16 @@ class UploadModel:
         return True
     
     @staticmethod
-    def find_by_filename(filename):
+    def find_by_filename(filehorario):
         conn = get_db_connection()
-        file = conn.execute('SELECT * FROM uploads WHERE filename = ?', (filename, )).fetchone()
+        file = conn.execute('SELECT * FROM uploads WHERE filehorario = ?', (filehorario, )).fetchone()
         conn.close()
         return file
 
     @staticmethod
-    def delete_file(filename):
+    def delete_file(filehorario):
         conn = get_db_connection()
-        conn.execute('DELETE FROM uploads WHERE filename = ?', (filename,))
+        conn.execute('DELETE FROM uploads WHERE filehorario = ?', (filehorario,))
         conn.commit()
         conn.close()
         return True
